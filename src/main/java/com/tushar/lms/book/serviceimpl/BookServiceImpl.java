@@ -1,4 +1,4 @@
-package com.tushar.lms.book;
+package com.tushar.lms.book.serviceimpl;
 
 import java.util.List;
 import java.util.UUID;
@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +26,11 @@ public class BookServiceImpl implements BookService {
 	@Autowired
 	private ModelMapper modelMapper;
 
+	Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
+
 	@Override
 	public BookDto addNewBook(BookDto addNewBook) {
+		logger.info("Inside BookServiceImpl ---------> addNewBook");
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		Book newBook = modelMapper.map(addNewBook, Book.class);
 		newBook.setBookId(UUID.randomUUID().toString());
@@ -36,6 +41,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public List<BookDto> getAllBooks() {
+		logger.info("Inside BookServiceImpl ---------> getAllBooks");
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		List<Book> books = bookRepository.findAll();
 		List<BookDto> bookDtos = books.stream().map(book -> modelMapper.map(book, BookDto.class))
@@ -45,6 +51,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public BookDto getBook(String bookId) {
+		logger.info("Inside BookServiceImpl ---------> getBook");
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		Book foundBook = bookRepository.findByBookId(bookId);
 		BookDto bookDto = modelMapper.map(foundBook, BookDto.class);
@@ -53,6 +60,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public List<IssuedBookDto> getIssuedBooks(String userId) {
+		logger.info("Inside BookServiceImpl ---------> getIssuedBooks");
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		List<Book> books = bookRepository.findByUserId(userId);
 		List<IssuedBookDto> issuedBookDtos = books.stream().map(book -> modelMapper.map(book, IssuedBookDto.class))
