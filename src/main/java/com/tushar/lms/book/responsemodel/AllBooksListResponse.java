@@ -1,6 +1,6 @@
-package com.tushar.lms.book.dto;
+package com.tushar.lms.book.responsemodel;
 
-public class BookDto {
+public class AllBooksListResponse {
 
 	private String bookId;
 	private String bookName;

@@ -2,17 +2,20 @@ package com.tushar.lms.book.service;
 
 import java.util.List;
 
-import com.tushar.lms.book.dto.BookDto;
-import com.tushar.lms.book.dto.IssuedBookDto;
+import com.tushar.lms.book.requestmodel.NewBookRequest;
+import com.tushar.lms.book.responsemodel.AllBooksListResponse;
+import com.tushar.lms.book.responsemodel.GetBookResponse;
+import com.tushar.lms.book.responsemodel.IssuedBookResponse;
+import com.tushar.lms.book.responsemodel.NewBookResponse;
 
 public interface BookService {
 
-	BookDto addNewBook(BookDto addNewBook);
+	NewBookResponse addNewBook(NewBookRequest addNewBook);
 
-	List<BookDto> getAllBooks();
+	List<AllBooksListResponse> getAllBooks();
 
-	BookDto getBook(String bookId);
+	GetBookResponse getBook(String bookId);
 
-	List<IssuedBookDto> getIssuedBooks(String userId);
+	List<IssuedBookResponse> getIssuedBooks(String userId);
 
 }

@@ -1,6 +1,6 @@
-package com.tushar.lms.book.dto;
+package com.tushar.lms.book.responsemodel;
 
-public class IssuedBookDto {
+public class NewBookResponse {
 
 	private String bookId;
 	private String bookName;
@@ -29,4 +29,5 @@ public class IssuedBookDto {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
+
 }

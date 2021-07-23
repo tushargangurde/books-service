@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tushar.lms.book.dto.BookDto;
-import com.tushar.lms.book.dto.IssuedBookDto;
+import com.tushar.lms.book.requestmodel.NewBookRequest;
+import com.tushar.lms.book.responsemodel.AllBooksListResponse;
+import com.tushar.lms.book.responsemodel.GetBookResponse;
+import com.tushar.lms.book.responsemodel.IssuedBookResponse;
+import com.tushar.lms.book.responsemodel.NewBookResponse;
 import com.tushar.lms.book.service.BookService;
 
 @RestController
@@ -28,31 +31,31 @@ public class BookController {
 	Logger logger = LoggerFactory.getLogger(BookController.class);
 
 	@PostMapping("/add")
-	public ResponseEntity<BookDto> addNewBook(@RequestBody BookDto addNewBook) {
+	public ResponseEntity<NewBookResponse> addNewBook(@RequestBody NewBookRequest addNewBook) {
 		logger.info("Inside BookController ---------> addNewBook");
-		BookDto newBook = bookService.addNewBook(addNewBook);
-		return new ResponseEntity<BookDto>(newBook, HttpStatus.CREATED);
+		NewBookResponse newBook = bookService.addNewBook(addNewBook);
+		return new ResponseEntity<NewBookResponse>(newBook, HttpStatus.CREATED);
 	}
 
 	@GetMapping("/getAll")
-	public ResponseEntity<List<BookDto>> getAllBooks() {
+	public ResponseEntity<List<AllBooksListResponse>> getAllBooks() {
 		logger.info("Inside BookController ---------> getAllBooks");
-		List<BookDto> bookList = bookService.getAllBooks();
-		return new ResponseEntity<List<BookDto>>(bookList, HttpStatus.FOUND);
+		List<AllBooksListResponse> bookList = bookService.getAllBooks();
+		return new ResponseEntity<List<AllBooksListResponse>>(bookList, HttpStatus.FOUND);
 	}
 
 	@GetMapping("/{bookId}")
-	public ResponseEntity<BookDto> getBook(@PathVariable String bookId) {
+	public ResponseEntity<GetBookResponse> getBook(@PathVariable String bookId) {
 		logger.info("Inside BookController ---------> getBook");
-		BookDto book = bookService.getBook(bookId);
-		return new ResponseEntity<BookDto>(book, HttpStatus.FOUND);
+		GetBookResponse book = bookService.getBook(bookId);
+		return new ResponseEntity<GetBookResponse>(book, HttpStatus.FOUND);
 	}
 
 	@GetMapping("/issuedBooks/{userId}")
-	public ResponseEntity<List<IssuedBookDto>> getIssuedBooks(@PathVariable String userId) {
+	public ResponseEntity<List<IssuedBookResponse>> getIssuedBooks(@PathVariable String userId) {
 		logger.info("Inside BookController ---------> getIssuedBooks");
-		List<IssuedBookDto> issuedBookDtos = bookService.getIssuedBooks(userId);
-		return new ResponseEntity<List<IssuedBookDto>>(issuedBookDtos, HttpStatus.OK);
+		List<IssuedBookResponse> issuedBookDtos = bookService.getIssuedBooks(userId);
+		return new ResponseEntity<List<IssuedBookResponse>>(issuedBookDtos, HttpStatus.OK);
 	}
 
 }
