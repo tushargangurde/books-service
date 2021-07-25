@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +32,7 @@ public class BookController {
 	Logger logger = LoggerFactory.getLogger(BookController.class);
 
 	@PostMapping("/add")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<NewBookResponse> addNewBook(@RequestBody NewBookRequest addNewBook) {
 		logger.info("Inside BookController ---------> addNewBook");
 		NewBookResponse newBook = bookService.addNewBook(addNewBook);
@@ -38,6 +40,7 @@ public class BookController {
 	}
 
 	@GetMapping("/getAll")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<List<AllBooksListResponse>> getAllBooks() {
 		logger.info("Inside BookController ---------> getAllBooks");
 		List<AllBooksListResponse> bookList = bookService.getAllBooks();
@@ -45,6 +48,7 @@ public class BookController {
 	}
 
 	@GetMapping("/{bookId}")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<GetBookResponse> getBook(@PathVariable String bookId) {
 		logger.info("Inside BookController ---------> getBook");
 		GetBookResponse book = bookService.getBook(bookId);
@@ -52,6 +56,7 @@ public class BookController {
 	}
 
 	@GetMapping("/issuedBooks/{userId}")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') or principal == #userId")
 	public ResponseEntity<List<IssuedBookResponse>> getIssuedBooks(@PathVariable String userId) {
 		logger.info("Inside BookController ---------> getIssuedBooks");
 		List<IssuedBookResponse> issuedBookDtos = bookService.getIssuedBooks(userId);
