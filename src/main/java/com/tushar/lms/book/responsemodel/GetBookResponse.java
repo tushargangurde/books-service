@@ -5,6 +5,7 @@ public class GetBookResponse {
 	private String bookId;
 	private String bookName;
 	private String author;
+	private boolean isAvailable;
 
 	public String getBookId() {
 		return bookId;
@@ -30,4 +31,11 @@ public class GetBookResponse {
 		this.author = author;
 	}
 
+	public boolean isAvailable() {
+		return isAvailable;
+	}
+
+	public void setAvailable(boolean isAvailable) {
+		this.isAvailable = isAvailable;
+	}
 }

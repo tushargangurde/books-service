@@ -14,16 +14,18 @@ public class Book {
 	private String bookName;
 	private String author;
 	private String userId;
+	private boolean isAvailable;
 
 	public Book() {
 	}
 
-	public Book(int id, String bookId, String bookName, String author, String userId) {
+	public Book(int id, String bookId, String bookName, String author, String userId, boolean isAvailable) {
 		this.id = id;
 		this.bookId = bookId;
 		this.bookName = bookName;
 		this.author = author;
 		this.userId = userId;
+		this.isAvailable = isAvailable;
 	}
 
 	public int getId() {
@@ -64,5 +66,13 @@ public class Book {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public boolean isAvailable() {
+		return isAvailable;
+	}
+
+	public void setAvailable(boolean isAvailable) {
+		this.isAvailable = isAvailable;
 	}
 }

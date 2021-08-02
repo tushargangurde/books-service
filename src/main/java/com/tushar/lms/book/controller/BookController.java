@@ -63,4 +63,12 @@ public class BookController {
 		return new ResponseEntity<List<IssuedBookResponse>>(issuedBookDtos, HttpStatus.OK);
 	}
 
+	@GetMapping("/getAvailableBooks")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') or principal == #userId")
+	public ResponseEntity<List<AllBooksListResponse>> getAvailableBooks() {
+		logger.info("Inside BookController ---------> getAvailableBooks");
+		List<AllBooksListResponse> allBooksListResponses = bookService.getAvailableBooks();
+		return new ResponseEntity<List<AllBooksListResponse>>(allBooksListResponses, HttpStatus.OK);
+	}
+
 }

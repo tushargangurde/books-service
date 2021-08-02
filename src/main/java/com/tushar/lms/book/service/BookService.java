@@ -18,4 +18,6 @@ public interface BookService {
 
 	List<IssuedBookResponse> getIssuedBooks(String userId);
 
+	List<AllBooksListResponse> getAvailableBooks();
+
 }
