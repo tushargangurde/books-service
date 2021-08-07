@@ -83,10 +83,20 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public Boolean setAvailableStatus(String bookId, String userId) {
+		logger.info("Inside BookServiceImpl ---------> setAvailableStatus");
 		Book bookToBeFound = bookRepository.findByBookId(bookId);
 		if (bookToBeFound.getAvailable()) {
 			bookToBeFound.setUserId(userId);
 			bookToBeFound.setAvailable(false);
+			Book savedBook = bookRepository.save(bookToBeFound);
+			if (savedBook != null) {
+				return true;
+			}
+		}
+
+		if (!bookToBeFound.getAvailable()) {
+			bookToBeFound.setUserId("");
+			bookToBeFound.setAvailable(true);
 			Book savedBook = bookRepository.save(bookToBeFound);
 			if (savedBook != null) {
 				return true;
