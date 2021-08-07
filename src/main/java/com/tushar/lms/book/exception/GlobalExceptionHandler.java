@@ -45,4 +45,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 				"Something went wrong", exception.getMessage());
 		return new ResponseEntity<ApiErrorResponse>(apiErrorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+
+	@ExceptionHandler(BookNotFoundException.class)
+	public ResponseEntity<ApiErrorResponse> handleBookNotFoundException(Exception exception) {
+		logger.info("GlobalExceptionHandler --------------------> handleBookNotFoundException");
+		ApiErrorResponse apiErrorResponse = new ApiErrorResponse(HttpStatus.NOT_FOUND.value(), "Something went wrong",
+				exception.getMessage());
+		return new ResponseEntity<ApiErrorResponse>(apiErrorResponse, HttpStatus.NOT_FOUND);
+	}
 }

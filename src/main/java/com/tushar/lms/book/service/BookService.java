@@ -20,4 +20,6 @@ public interface BookService {
 
 	List<AllBooksListResponse> getAvailableBooks();
 
+	Boolean setAvailableStatus(String bookId);
+
 }

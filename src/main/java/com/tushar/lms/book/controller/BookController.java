@@ -52,7 +52,7 @@ public class BookController {
 	public ResponseEntity<GetBookResponse> getBook(@PathVariable String bookId) {
 		logger.info("Inside BookController ---------> getBook");
 		GetBookResponse book = bookService.getBook(bookId);
-		return new ResponseEntity<GetBookResponse>(book, HttpStatus.FOUND);
+		return new ResponseEntity<GetBookResponse>(book, HttpStatus.OK);
 	}
 
 	@GetMapping("/issuedBooks/{userId}")
@@ -69,6 +69,17 @@ public class BookController {
 		logger.info("Inside BookController ---------> getAvailableBooks");
 		List<AllBooksListResponse> allBooksListResponses = bookService.getAvailableBooks();
 		return new ResponseEntity<List<AllBooksListResponse>>(allBooksListResponses, HttpStatus.OK);
+	}
+
+	@PostMapping("/setAvailableStatus/{bookId}")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	public ResponseEntity<Boolean> setAvailableStatus(@PathVariable String bookId) {
+		logger.info("Inside BookController ---------> setAvailableStatus");
+		Boolean status = bookService.setAvailableStatus(bookId);
+		if (status)
+			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		else
+			return new ResponseEntity<Boolean>(false, HttpStatus.NOT_MODIFIED);
 	}
 
 }

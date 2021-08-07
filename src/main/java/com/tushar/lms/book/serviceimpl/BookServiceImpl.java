@@ -75,11 +75,23 @@ public class BookServiceImpl implements BookService {
 	public List<AllBooksListResponse> getAvailableBooks() {
 		logger.info("Inside BookServiceImpl ---------> getAvailableBooks");
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		List<Book> books = bookRepository.findAll();
+		List<Book> books = bookRepository.getAvailableBooks();
 		List<AllBooksListResponse> bookDtos = books.stream()
 				.map(book -> modelMapper.map(book, AllBooksListResponse.class)).collect(Collectors.toList());
-		List<AllBooksListResponse> filteredBooks = bookDtos.stream().filter(e -> e.isAvailable()).toList();
-		return filteredBooks;
+		return bookDtos;
+	}
+
+	@Override
+	public Boolean setAvailableStatus(String bookId) {
+		Book bookToBeFound = bookRepository.findByBookId(bookId);
+		if (bookToBeFound.getAvailable()) {
+			bookToBeFound.setAvailable(false);
+			Book savedBook = bookRepository.save(bookToBeFound);
+			if (savedBook != null) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
