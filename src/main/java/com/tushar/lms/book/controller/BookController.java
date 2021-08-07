@@ -71,11 +71,11 @@ public class BookController {
 		return new ResponseEntity<List<AllBooksListResponse>>(allBooksListResponses, HttpStatus.OK);
 	}
 
-	@PostMapping("/setAvailableStatus/{bookId}")
+	@PostMapping("/setAvailableStatus/{bookId}/{userId}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public ResponseEntity<Boolean> setAvailableStatus(@PathVariable String bookId) {
+	public ResponseEntity<Boolean> setAvailableStatus(@PathVariable String bookId, @PathVariable String userId) {
 		logger.info("Inside BookController ---------> setAvailableStatus");
-		Boolean status = bookService.setAvailableStatus(bookId);
+		Boolean status = bookService.setAvailableStatus(bookId, userId);
 		if (status)
 			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 		else
